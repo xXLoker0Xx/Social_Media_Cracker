@@ -1,0 +1,14 @@
+# Requisitos para el proyecto de chatbot con LangChain y Ollama
+pandas
+openpyxl
+
+# 🧠 Core LangChain y sus divisiones actualizadas
+langchain>=0.2.0
+langchain-community
+langchain-ollama
+
+# 📡 Cliente para conectarse al servidor Ollama local
+ollama
+
+# ✨ (Opcional) Para manejar variables de entorno, logs, etc.
+python-dotenv
