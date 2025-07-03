@@ -1,5 +1,6 @@
 import requests
 import base64
+import os
 
 # URL de tu instancia de Stable Diffusion local
 URL_SD = "http://127.0.0.1:7860/sdapi/v1/txt2img"
@@ -34,14 +35,22 @@ def generar_imagen(prompt: str, nombre_archivo: str = "output.png"):
         }
     }
 
+    # Realiza la solicitud a la API de Stable Diffusion (que es tu servidor local)
     response = requests.post(URL_SD, json=payload)
     print("🛰️ Estado HTTP:", response.status_code)
+
+    # Prepara la ruta de salida
+    output_dir = "imagenes_generadas"
+    os.makedirs(output_dir, exist_ok=True)  # crea la carpeta si no existe
 
     try:
         r = response.json()
         if "images" in r:
             image_data = r["images"][0]
-            with open(nombre_archivo, "wb") as f:
+            # Nombre del archivo dentro de la nueva carpeta
+            ruta_imagen = os.path.join(output_dir, nombre_archivo)
+
+            with open(ruta_imagen, "wb") as f:
                 f.write(base64.b64decode(image_data.split(",", 1)[-1]))
             print(f"✅ Imagen guardada como {nombre_archivo}")
             return nombre_archivo
